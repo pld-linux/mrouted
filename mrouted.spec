@@ -1,4 +1,5 @@
 Summary:	Multicast routing daemon
+Summary(pl):	Demon routingu multicastowego
 Name:		mrouted
 Version:	3.9beta3+IOS12
 Release:	0
@@ -24,6 +25,14 @@ routing protocol (like RIP, described in RFC-1058), upon which it
 implements a multicast datagram forwarding algorithm called Reverse
 Path Multicasting.
 
+%description -l pl
+mrouted to implementacja DVMRP (Distance-Vector Multicast Routing
+Protocol), którego wsze¶niejsza wersja jest opisana w RFC-1075.
+Zbiera informacje topologiczne przez protokó³ discance-vector routing
+(podobny do RIP, opisany w RFC-1058), a na ich podstawie implementuje
+algorytm forwardowania datagramów multicastowych nazywany Reverse
+Path Multicasting.
+
 %prep
 %setup  -q
 %patch0 -p1
@@ -43,9 +52,11 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/mrouted
 
 gzip -9nf README* LICENSE
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
 /sbin/chkconfig --add mrouted 
-
 if [ -f /var/lock/subsys/mrouted ]; then
 	/etc/rc.d/init.d/mrouted restart >&2
 else
@@ -59,9 +70,6 @@ if [ "$1" = "0" ]; then
 	fi
         /sbin/chkconfig --del mrouted >&2
 fi
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)

@@ -25,11 +25,11 @@ Path Multicasting.
 
 %description -l pl
 mrouted to implementacja DVMRP (Distance-Vector Multicast Routing
-Protocol), którego wsze¶niejsza wersja jest opisana w RFC-1075.
-Zbiera informacje topologiczne przez protokó³ discance-vector routing
+Protocol), którego wsze¶niejsza wersja jest opisana w RFC-1075. Zbiera
+informacje topologiczne przez protokó³ discance-vector routing
 (podobny do RIP, opisany w RFC-1058), a na ich podstawie implementuje
-algorytm forwardowania datagramów multicastowych nazywany Reverse
-Path Multicasting.
+algorytm forwardowania datagramów multicastowych nazywany Reverse Path
+Multicasting.
 
 %prep
 %setup  -q
@@ -54,13 +54,13 @@ gzip -9nf README* LICENSE
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add mrouted 
+/sbin/chkconfig --add mrouted
 if [ -f /var/lock/subsys/mrouted ]; then
 	/etc/rc.d/init.d/mrouted restart >&2
 else
 	echo "Run '/etc/rc.d/init.d/mrouted start' to start routing deamon." >&2
 fi
-    
+
 %preun
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/mrouted ]; then

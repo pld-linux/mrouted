@@ -4,12 +4,13 @@ Version:	3.9beta3+IOS12
 Release:	0
 License:	Custom
 Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Source0:	ftp://ftp.research.att.com/dist/fenner/mrouted/%{name}-%{version}.tar.gz
-Source1:	%{name}.init	
-Patch0:		mrouted-linux-glibc.patch
-Patch1:		mrouted-pointtopoint.patch
-Patch2:		mrouted-paths.patch
+Source1:	%{name}.init
+Patch0:		%{name}-linux-glibc.patch
+Patch1:		%{name}-pointtopoint.patch
+Patch2:		%{name}-paths.patch
 Prereq:		/sbin/chkconfig
 Prereq:		rc-scripts
 BuildRequires:	yacc
@@ -30,7 +31,7 @@ Path Multicasting.
 %patch2 -p1
 
 %build
-%{__make} CFLAGS="$RPM_OPT_FLAGS -DRAW_INPUT_IS_RAW -DRAW_OUTPUT_IS_RAW -DIOCTL_OK_ON_RAW_SOCKET"
+%{__make} CFLAGS="%{rpmcflags} -DRAW_INPUT_IS_RAW -DRAW_OUTPUT_IS_RAW -DIOCTL_OK_ON_RAW_SOCKET"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -39,7 +40,8 @@ install map-mbone mrinfo mrouted $RPM_BUILD_ROOT%{_sbindir}
 install *.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install mrouted.conf $RPM_BUILD_ROOT%{_sysconfdir}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/mrouted
-gzip -9nf README* LICENSE $RPM_BUILD_ROOT%{_mandir}/man8/*
+
+gzip -9nf README* LICENSE
 
 %post
 /sbin/chkconfig --add mrouted 

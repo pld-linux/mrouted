@@ -47,7 +47,7 @@ diff -durN mrouted-3.9beta3+IOS12.orig/vif.c mrouted-3.9beta3+IOS12/vif.c
  					      dst == dvmrp_group))
  		    return(vifi);
  	    }
-+	    else if (dst == v->uv_lcl_addr && (v->uv_flags & IFF_POINTOPOINT)) {
++	    else if (src == v->uv_lcl_addr && (v->uv_flags & IFF_POINTOPOINT)) {
 +		    return(vifi);
 +	    }
  	    else {

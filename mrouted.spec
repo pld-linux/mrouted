@@ -9,6 +9,7 @@ Source0:	ftp://ftp.research.att.com/dist/fenner/mrouted/%{name}-%{version}.tar.g
 Source1:	%{name}.init	
 Patch0:		mrouted-linux-glibc.patch
 Patch1:		mrouted-pointtopoint.patch
+Patch2:		mrouted-paths.patch
 Prereq:		/sbin/chkconfig
 Requires:	rc-scripts
 BuildRequires:	yacc
@@ -25,6 +26,7 @@ forwarding  algorithm  called Reverse Path Multicasting.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS -DRAW_INPUT_IS_RAW -DRAW_OUTPUT_IS_RAW -DIOCTL_OK_ON_RAW_SOCKET"

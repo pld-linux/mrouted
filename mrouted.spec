@@ -11,9 +11,9 @@ Source1:	%{name}.init
 Patch0:		%{name}-linux-glibc.patch
 Patch1:		%{name}-pointtopoint.patch
 Patch2:		%{name}-paths.patch
-Prereq:		/sbin/chkconfig
-Prereq:		rc-scripts
 BuildRequires:	yacc
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -39,7 +39,8 @@ Multicasting.
 %patch2 -p1
 
 %build
-%{__make} CFLAGS="%{rpmcflags} -DRAW_INPUT_IS_RAW -DRAW_OUTPUT_IS_RAW -DIOCTL_OK_ON_RAW_SOCKET"
+%{__make} \
+	CFLAGS="%{rpmcflags} -DRAW_INPUT_IS_RAW -DRAW_OUTPUT_IS_RAW -DIOCTL_OK_ON_RAW_SOCKET"
 
 %install
 rm -rf $RPM_BUILD_ROOT

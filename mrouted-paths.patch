@@ -1,0 +1,18 @@
+diff -durN mrouted-3.9beta3+IOS12.orig/pathnames.h mrouted-3.9beta3+IOS12/pathnames.h
+--- mrouted-3.9beta3+IOS12.orig/pathnames.h	Wed Nov 29 23:36:57 1995
++++ mrouted-3.9beta3+IOS12/pathnames.h	Mon Apr 24 11:03:59 2000
+@@ -12,14 +12,7 @@
+ 
+ #define _PATH_MROUTED_CONF	"/etc/mrouted.conf"
+ 
+-#if (defined(BSD) && (BSD >= 199103))
+ #define _PATH_MROUTED_PID	"/var/run/mrouted.pid"
+ #define _PATH_MROUTED_GENID	"/var/run/mrouted.genid"
+ #define _PATH_MROUTED_DUMP	"/var/tmp/mrouted.dump"
+ #define _PATH_MROUTED_CACHE	"/var/tmp/mrouted.cache"
+-#else
+-#define _PATH_MROUTED_PID	"/etc/mrouted.pid"
+-#define _PATH_MROUTED_GENID	"/etc/mrouted.genid"
+-#define _PATH_MROUTED_DUMP	"/usr/tmp/mrouted.dump"
+-#define _PATH_MROUTED_CACHE	"/usr/tmp/mrouted.cache"
+-#endif

@@ -5,8 +5,6 @@ Version:	3.9beta3+IOS12
 Release:	0
 License:	Custom
 Group:		Networking/Daemons
-Group(de):	Netzwerkwesen/Server
-Group(pl):	Sieciowe/Serwery
 Source0:	ftp://ftp.research.att.com/dist/fenner/mrouted/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Patch0:		%{name}-linux-glibc.patch

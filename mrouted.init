@@ -24,7 +24,7 @@ else
 fi
 
 # Get service config
-if [ -f /etc/sysconfig/mrouted ] ; then
+if [ -f /etc/sysconfig/mrouted ]; then
 	. /etc/sysconfig/mrouted
 fi
 

@@ -6,6 +6,7 @@ Release:	0
 License:	custom
 Group:		Networking/Daemons
 Source0:	ftp://ftp.research.att.com/dist/fenner/mrouted/%{name}-%{version}.tar.gz
+# Source0-md5:	15bb287b5af0cef4ec8e4ad3bd56740c
 Source1:	%{name}.init
 Patch0:		%{name}-linux-glibc.patch
 Patch1:		%{name}-pointtopoint.patch

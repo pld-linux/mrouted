@@ -59,10 +59,8 @@ case "$1" in
 	;;
   reload)
 	msg_reloading "multicast routing daemon"
-	busy
 	killproc mrouted -HUP
 	RETVAL=$?
-	[ $RETVAL -eq 0 ] && ok || died
 	;;
   restart)
 	$0 stop

@@ -44,10 +44,21 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/mrouted
 gzip -9nf README* LICENSE
 
 %post
-DESC="routing daemon"; %chkconfig_add
+/sbin/chkconfig --add mrouted 
+
+if [ -f /var/lock/subsys/mrouted ]; then
+	/etc/rc.d/init.d/mrouted restart >&2
+else
+	echo "Run '/etc/rc.d/init.d/mrouted start' to start routing deamon." >&2
+fi
     
 %preun
-%chkconfig_del
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/mrouted ]; then
+		/etc/rc.d/init.d/mrouted stop >&2
+	fi
+        /sbin/chkconfig --del mrouted >&2
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT

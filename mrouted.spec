@@ -8,8 +8,10 @@ Group(pl):	Sieciowe/Serwery
 Source0:	ftp://ftp.research.att.com/dist/fenner/mrouted/%{name}-%{version}.tar.gz
 Source1:	%{name}.init	
 Patch0:		mrouted-linux-glibc.patch
+Patch1:		mrouted-pointtopoint.patch
 Prereq:		/sbin/chkconfig
 Requires:	rc-scripts
+BuildRequires:	yacc
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -22,9 +24,10 @@ forwarding  algorithm  called Reverse Path Multicasting.
 %prep
 %setup  -q
 %patch0 -p1
+%patch1 -p1
 
 %build
-make CFLAGS="$RPM_OPT_FLAGS"
+make CFLAGS="$RPM_OPT_FLAGS -DRAW_INPUT_IS_RAW -DRAW_OUTPUT_IS_RAW -DIOCTL_OK_ON_RAW_SOCKET"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -61,4 +64,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/*
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.conf
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mrouted.conf

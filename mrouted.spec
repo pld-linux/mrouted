@@ -3,7 +3,7 @@ Summary(pl):	Demon routingu multicastowego
 Name:		mrouted
 Version:	3.9beta3+IOS12
 Release:	0
-License:	Custom
+License:	custom
 Group:		Networking/Daemons
 Source0:	ftp://ftp.research.att.com/dist/fenner/mrouted/%{name}-%{version}.tar.gz
 Source1:	%{name}.init

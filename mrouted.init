@@ -28,7 +28,7 @@ if [ -f /etc/sysconfig/mrouted ] ; then
 	. /etc/sysconfig/mrouted
 fi
 
-
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -38,10 +38,10 @@ case "$1" in
 	if [ ! -f /var/lock/subsys/mrouted ]; then
 		msg_starting "multicast routing daemon"
 		daemon mrouted
-		touch /var/lock/subsys/mrouted
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mrouted
 	else
 		msg_already_running "multicast routing daemon"
-		exit 1
 	fi
 	;;
   stop)	
@@ -51,24 +51,30 @@ case "$1" in
 		rm -f /var/lock/subsys/mrouted
 	else
 		msg_not_running "multicast routing daemon"
-		exit 1
 	fi
 	;;
-  status)
-	status mrouted
-	;;
-  reload)
-	msg_reloading "multicast routing daemon"
-	killproc mrouted -HUP
-	RETVAL=$?
+  reload|force-reload)
+	if [ -f /var/lock/subsys/mrouted ]; then
+		msg_reloading "multicast routing daemon"
+		killproc mrouted -HUP
+		RETVAL=$?
+	else
+		msg_not_running "multicast routing daemon" >&2
+		exit 7
+	fi
 	;;
   restart)
 	$0 stop
 	$0 start
+	exit $?
+	;;
+  status)
+	status mrouted
+	exit $?
 	;;
   *)
-	echo "Usage: $0 {start|stop|restart|reload|status}"
-	exit 1
+	echo "Usage: $0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
 esac
 
 exit $RETVAL

@@ -42,11 +42,11 @@ Multicasting.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/rc.d/init.d,%{_sbindir},%{_mandir}/man8}
+install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_sbindir},%{_mandir}/man8}
 install map-mbone mrinfo mrouted $RPM_BUILD_ROOT%{_sbindir}
 install *.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install mrouted.conf $RPM_BUILD_ROOT%{_sysconfdir}
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/mrouted
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/mrouted
 
 %clean
 rm -rf $RPM_BUILD_ROOT

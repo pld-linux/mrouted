@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# mrouted        Starts mrouted.
+# mrouted	Starts mrouted.
 #
 #
 # chkconfig:	2345 85 40
@@ -13,44 +13,64 @@
 # Get network config
 . /etc/sysconfig/network
 
+# Check that networking is up
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		msg_network_down "multicast routing daemon"
+		exit 1
+	fi
+else
+	exit 0
+fi
+
 # Get service config
 if [ -f /etc/sysconfig/mrouted ] ; then
-        . /etc/sysconfig/mrouted
+	. /etc/sysconfig/mrouted
 fi
+
 
 # See how we were called.
 case "$1" in
   start)
-  	# mrouted needs IPIP tunneling support
+	# mrouted needs IPIP tunneling support
 	modprobe ipip
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/mrouted ]; then
-		show "Starting multicast routing daemon"
+		msg_starting "multicast routing daemon"
 		daemon mrouted
+		touch /var/lock/subsys/mrouted
 	else
-		echo "mrouted already is running"
+		msg_already_running "multicast routing daemon"
+		exit 1
 	fi
-	touch /var/lock/subsys/mrouted
 	;;
-    stop)	
-	show "Stopping multicast routing daemon"
-	killproc mrouted
-	rm -f /var/lock/subsys/mrouted
+  stop)	
+	if [ -f /var/lock/subsys/mrouted ]; then
+		msg_stopping "multicast routing daemon"
+		killproc mrouted
+		rm -f /var/lock/subsys/mrouted
+	else
+		msg_not_running "multicast routing daemon"
+		exit 1
+	fi
 	;;
   status)
 	status mrouted
 	;;
   reload)
+	msg_reloading "multicast routing daemon"
+	busy
 	killproc mrouted -HUP
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && ok || died
 	;;
   restart)
 	$0 stop
 	$0 start
 	;;
   *)
-	echo "Usage: $0 {start|stop|status|restart|reload}"
+	echo "Usage: $0 {start|stop|restart|reload|status}"
 	exit 1
 esac
 
-exit 0
-
+exit $RETVAL

@@ -21,6 +21,8 @@ fi
 # See how we were called.
 case "$1" in
   start)
+  	# mrouted needs IPIP tunneling support
+	modprobe ipip
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/mrouted ]; then
 		show "Starting multicast routing daemon"

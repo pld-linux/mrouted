@@ -48,8 +48,6 @@ install *.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install mrouted.conf $RPM_BUILD_ROOT%{_sysconfdir}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/mrouted
 
-gzip -9nf README* LICENSE
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -71,7 +69,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README*.gz LICENSE.gz
+%doc README* LICENSE
 %{_mandir}/man8/*
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/*

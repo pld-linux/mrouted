@@ -1,0 +1,33 @@
+diff -durN mrouted-3.9beta3+IOS12.orig/config.c mrouted-3.9beta3+IOS12/config.c
+--- mrouted-3.9beta3+IOS12.orig/config.c	Tue Jan  6 02:57:41 1998
++++ mrouted-3.9beta3+IOS12/config.c	Sun Apr 23 21:51:03 2000
+@@ -100,16 +100,24 @@
+ 	flags = ifr.ifr_flags;
+ 	if ((flags & (IFF_LOOPBACK|IFF_MULTICAST)) != IFF_MULTICAST) continue;
+ 
++	if (ioctl(udp_socket, SIOCGIFNETMASK, (char *)&ifr) < 0)
++	    log(LOG_ERR, errno, "ioctl SIOCGIFNETMASK for %s", ifr.ifr_name);
++	mask = ((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr;
++	subnet = addr & mask;
++
++	/*
++	 * on point-to-point interfaces netmask does not have its usual meaning
++	 */
++	if (flags & IFF_POINTOPOINT){
++	    if (ioctl(udp_socket, SIOCGIFDSTADDR, (char *)&ifr) < 0)
++	        log(LOG_ERR, errno, "ioctl SIOCGIFDSTADDR for %s", ifr.ifr_name);
++	    subnet = ((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr;
+ 	/*
+ 	 * Ignore any interface whose address and mask do not define a
+ 	 * valid subnet number, or whose address is of the form {subnet,0}
+ 	 * or {subnet,-1}.
+ 	 */
+-	if (ioctl(udp_socket, SIOCGIFNETMASK, (char *)&ifr) < 0)
+-	    log(LOG_ERR, errno, "ioctl SIOCGIFNETMASK for %s", ifr.ifr_name);
+-	mask = ((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr.s_addr;
+-	subnet = addr & mask;
+-	if (!inet_valid_subnet(subnet, mask) ||
++	} else if (!inet_valid_subnet(subnet, mask) ||
+ 	    addr == subnet ||
+ 	    addr == (subnet | ~mask)) {
+ 	    log(LOG_WARNING, 0,

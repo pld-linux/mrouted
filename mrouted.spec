@@ -11,7 +11,7 @@ Patch0:		mrouted-linux-glibc.patch
 Patch1:		mrouted-pointtopoint.patch
 Patch2:		mrouted-paths.patch
 Prereq:		/sbin/chkconfig
-Requires:	rc-scripts
+Prereq:		rc-scripts
 BuildRequires:	yacc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 

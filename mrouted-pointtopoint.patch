@@ -1,6 +1,6 @@
 diff -durN mrouted-3.9beta3+IOS12.orig/config.c mrouted-3.9beta3+IOS12/config.c
 --- mrouted-3.9beta3+IOS12.orig/config.c	Tue Jan  6 02:57:41 1998
-+++ mrouted-3.9beta3+IOS12/config.c	Sun Apr 23 21:51:03 2000
++++ mrouted-3.9beta3+IOS12/config.c	Mon Apr 24 10:51:58 2000
 @@ -100,16 +100,24 @@
  	flags = ifr.ifr_flags;
  	if ((flags & (IFF_LOOPBACK|IFF_MULTICAST)) != IFF_MULTICAST) continue;
@@ -31,3 +31,24 @@ diff -durN mrouted-3.9beta3+IOS12.orig/config.c mrouted-3.9beta3+IOS12/config.c
  	    addr == subnet ||
  	    addr == (subnet | ~mask)) {
  	    log(LOG_WARNING, 0,
+@@ -154,7 +162,7 @@
+ 	strncpy(v->uv_name, ifr.ifr_name, IFNAMSIZ);
+ 
+ 	if (flags & IFF_POINTOPOINT)
+-	    v->uv_flags |= VIFF_REXMIT_PRUNES;
++	    v->uv_flags |= VIFF_REXMIT_PRUNES | IFF_POINTOPOINT;
+ 
+ 	log(LOG_INFO,0,"installing %s (%s on subnet %s) as vif #%u - rate=%d",
+ 	    v->uv_name, inet_fmt(addr, s1), inet_fmts(subnet, mask, s2),
+diff -durN mrouted-3.9beta3+IOS12.orig/vif.c mrouted-3.9beta3+IOS12/vif.c
+--- mrouted-3.9beta3+IOS12.orig/vif.c	Wed Jan 20 06:18:50 1999
++++ mrouted-3.9beta3+IOS12/vif.c	Mon Apr 24 10:56:36 2000
+@@ -1203,7 +1203,7 @@
+      * find_vif() because those types of address are acceptable for some
+      * types of IGMP message (such as group membership reports).
+      */
+-    if (!(v->uv_flags & VIFF_TUNNEL) &&
++    if (!(v->uv_flags & (VIFF_TUNNEL|IFF_POINTOPOINT)) &&
+ 	(addr == v->uv_lcl_addr ||
+ 	 addr == v->uv_subnet )) {
+ 	log(LOG_WARNING, 0,

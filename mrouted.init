@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# syslog        Starts mroutedd.
+# mrouted        Starts mrouted.
 #
 #
 # chkconfig:	2345 85 40
@@ -14,8 +14,8 @@
 . /etc/sysconfig/network
 
 # Get service config
-if [ -f /etc/sysconfig/syslog ] ; then
-        . /etc/sysconfig/syslog
+if [ -f /etc/sysconfig/mrouted ] ; then
+        . /etc/sysconfig/mrouted
 fi
 
 # See how we were called.

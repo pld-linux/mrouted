@@ -1,0 +1,26 @@
+diff -durN mrouted-3.9beta3+IOS12.orig/defs.h mrouted-3.9beta3+IOS12/defs.h
+--- mrouted-3.9beta3+IOS12.orig/defs.h	Sun Mar  1 03:51:42 1998
++++ mrouted-3.9beta3+IOS12/defs.h	Sun Apr 23 17:05:39 2000
+@@ -45,7 +45,8 @@
+ #undef rtentry
+ #endif
+ #endif
+-#include <netinet/ip_mroute.h>
++#define _LINUX_IN_H
++#include <linux/mroute.h>
+ #ifdef RSRR
+ #include <sys/un.h>
+ #endif /* RSRR */
+@@ -176,12 +177,6 @@
+ extern char		s2[];
+ extern char		s3[];
+ extern char		s4[];
+-
+-#if !(defined(BSD) && (BSD >= 199103))
+-extern int		errno;
+-extern int		sys_nerr;
+-extern char *		sys_errlist[];
+-#endif
+ 
+ #ifdef OLD_KERNEL
+ #define	MRT_INIT	DVMRP_INIT

@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# syslog        Starts mroutedd.
+#
+#
+# chkconfig:	2345 85 40
+# description:	Mrouted is a multicast routing daemon
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config
+if [ -f /etc/sysconfig/syslog ] ; then
+        . /etc/sysconfig/syslog
+fi
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/mrouted ]; then
+		show "Starting multicast routing daemon"
+		daemon mrouted
+	else
+		echo "mrouted already is running"
+	fi
+	touch /var/lock/subsys/mrouted
+	;;
+    stop)	
+	show "Stopping multicast routing daemon"
+	killproc mrouted
+	rm -f /var/lock/subsys/mrouted
+	;;
+  status)
+	status mrouted
+	;;
+  reload)
+	killproc mrouted -HUP
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|status|restart|reload}"
+	exit 1
+esac
+
+exit 0
+

@@ -44,7 +44,7 @@ case "$1" in
 		msg_already_running "multicast routing daemon"
 	fi
 	;;
-  stop)	
+  stop)
 	if [ -f /var/lock/subsys/mrouted ]; then
 		msg_stopping "multicast routing daemon"
 		killproc mrouted

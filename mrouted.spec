@@ -13,14 +13,15 @@ Patch2:		mrouted-paths.patch
 Prereq:		/sbin/chkconfig
 Requires:	rc-scripts
 BuildRequires:	yacc
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Mrouted is an implementation of the Distance-Vector Multicast Routing Protocol
-(DVMRP), an earlier version of which is specified in RFC-1075.  It maintains
-topological knowledge via  a  distance-vector  routing protocol (like RIP,
-described in RFC-1058), upon which it implements a  multicast datagram
-forwarding  algorithm  called Reverse Path Multicasting.
+Mrouted is an implementation of the Distance-Vector Multicast Routing
+Protocol (DVMRP), an earlier version of which is specified in
+RFC-1075. It maintains topological knowledge via a distance-vector
+routing protocol (like RIP, described in RFC-1058), upon which it
+implements a multicast datagram forwarding algorithm called Reverse
+Path Multicasting.
 
 %prep
 %setup  -q

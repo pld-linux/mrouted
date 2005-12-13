@@ -12,8 +12,8 @@ Patch0:		%{name}-linux-glibc.patch
 Patch1:		%{name}-pointtopoint.patch
 Patch2:		%{name}-paths.patch
 BuildRequires:	yacc
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -27,9 +27,9 @@ Path Multicasting.
 %description -l pl
 mrouted to implementacja DVMRP (Distance-Vector Multicast Routing
 Protocol), którego wcze¶niejsza wersja jest opisana w RFC-1075. Zbiera
-informacje topologiczne przez protokó³ discance-vector routing (podobny 
-do RIP, opisany w RFC-1058), a na ich podstawie implementuje algorytm 
-forwardowania datagramów multicastowych nazywany Reverse Path 
+informacje topologiczne przez protokó³ discance-vector routing
+(podobny do RIP, opisany w RFC-1058), a na ich podstawie implementuje
+algorytm forwardowania datagramów multicastowych nazywany Reverse Path
 Multicasting.
 
 %prep
@@ -75,4 +75,4 @@ fi
 %{_mandir}/man8/*
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/*
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mrouted.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mrouted.conf

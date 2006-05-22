@@ -58,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 if [ -f /var/lock/subsys/mrouted ]; then
 	/etc/rc.d/init.d/mrouted restart >&2
 else
-	echo "Run '/etc/rc.d/init.d/mrouted start' to start routing deamon." >&2
+	echo "Run '/etc/rc.d/init.d/mrouted start' to start routing daemon." >&2
 fi
 
 %preun

@@ -11,6 +11,7 @@ Source1:	%{name}.init
 Patch0:		%{name}-linux-glibc.patch
 Patch1:		%{name}-pointtopoint.patch
 Patch2:		%{name}-paths.patch
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	yacc
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -55,18 +56,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add mrouted
-if [ -f /var/lock/subsys/mrouted ]; then
-	/etc/rc.d/init.d/mrouted restart >&2
-else
-	echo "Run '/etc/rc.d/init.d/mrouted start' to start routing daemon." >&2
-fi
+%service mrouted restart "routing daemon"
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/mrouted ]; then
-		/etc/rc.d/init.d/mrouted stop >&2
-	fi
-        /sbin/chkconfig --del mrouted >&2
+	%service mrouted stop
+	/sbin/chkconfig --del mrouted
 fi
 
 %files

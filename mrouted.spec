@@ -1,5 +1,5 @@
 Summary:	Multicast routing daemon
-Summary(pl):	Demon routingu multicastowego
+Summary(pl.UTF-8):   Demon routingu multicastowego
 Name:		mrouted
 Version:	3.9beta3+IOS12
 Release:	0
@@ -25,12 +25,12 @@ routing protocol (like RIP, described in RFC-1058), upon which it
 implements a multicast datagram forwarding algorithm called Reverse
 Path Multicasting.
 
-%description -l pl
+%description -l pl.UTF-8
 mrouted to implementacja DVMRP (Distance-Vector Multicast Routing
-Protocol), ktÛrego wcze∂niejsza wersja jest opisana w RFC-1075. Zbiera
-informacje topologiczne przez protokÛ≥ discance-vector routing
+Protocol), kt√≥rego wcze≈õniejsza wersja jest opisana w RFC-1075. Zbiera
+informacje topologiczne przez protok√≥≈Ç discance-vector routing
 (podobny do RIP, opisany w RFC-1058), a na ich podstawie implementuje
-algorytm forwardowania datagramÛw multicastowych nazywany Reverse Path
+algorytm forwardowania datagram√≥w multicastowych nazywany Reverse Path
 Multicasting.
 
 %prep

@@ -1,5 +1,5 @@
 Summary:	Multicast routing daemon
-Summary(pl.UTF-8):   Demon routingu multicastowego
+Summary(pl.UTF-8):	Demon routingu multicastowego
 Name:		mrouted
 Version:	3.9beta3+IOS12
 Release:	0
